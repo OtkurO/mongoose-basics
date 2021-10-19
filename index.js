@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 mongoose
-  .connect("mongodb://localhost:7727017/movieApp")
+  .connect("mongodb://localhost:27017/movieApp")
   .then(() => {
     console.log("Mongoose CONNECTION OPEN!");
   })
@@ -11,4 +11,13 @@ const movieSchema = new mongoose.Schema({
   year: Number,
   score: Number,
   rating: String,
+});
+
+//Create Movie class
+const Movie = mongoose.model("Movie", movieSchema);
+const theShawshankRedemption = new Movie({
+  title: "The Shawshank Redemption",
+  year: 1994,
+  score: 9.3,
+  rating: "R",
 });
