@@ -1,34 +1,45 @@
-const mongoose = require("mongoose");
+const express = require('express');
+const app = express();
+const path = require('path');
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+const mongoose = require('mongoose');
 mongoose
-  .connect("mongodb://localhost:27017/movieApp")
+  .connect('mongodb://localhost:27017/shopApp')
   .then(() => {
-    console.log("Mongoose CONNECTION OPEN!");
+    console.log('MONGO CONNECTION OPEN!');
   })
-  .catch((err) => console.log("CONNECTION ERROR!\n", err));
+  .catch((err) => console.log('MONGO CONNECTION ERROR!\n', err));
 
-const movieSchema = new mongoose.Schema({
-  title: String,
-  year: Number,
-  score: Number,
-  rating: String,
+const productSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    maxlength: 25,
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 0,
+  },
+  quantity: {
+    online: { type: Number, default: 0 },
+    offline: { type: Number, default: 1 },
+  },
+  categories: {
+    type: [String],
+  },
+  onSale: {
+    type: Boolean,
+    dafault: false,
+  },
 });
 
-//Create Movie class
-const Movie = mongoose.model("Movie", movieSchema);
-// const theShawshankRedemption = new Movie({
-//   title: "The Shawshank Redemption",
-//   year: 1994,
-//   score: 9.3,
-//   rating: "R",
-// });
-
-Movie.insertMany([
-  { title: "The Shawshank Redemption", year: 1994, score: 9.3, rating: "R" },
-  { title: "Alien", year: 1979, score: 8.1, rating: "R" },
-  { title: "The Iron Giant", year: 1999, score: 7.5, rating: "PG" },
-  { title: "Stand By Me", year: 1986, score: 8.6, rating: "R" },
-  { title: "Moonrise Kingdom", year: 2012, score: 7.3, rating: "PG-13" },
-]).then((data) => {
-  console.log("Inserted many successfully!");
-  console.log(data);
+app.get('/dog', (req, res) => {
+  console.log(res);
+  res.send(req.url);
 });
+
+app.listen('3000', () => console.log('App is listening on port 3000!'));
