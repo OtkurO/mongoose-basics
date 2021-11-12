@@ -1,0 +1,17 @@
+body {
+  background-color: rgb(120, 120, 148);
+  color: white;
+}
+li {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+  color: white;
+}
+a:visited {
+  color: rgb(160, 190, 160);
+}
+a:hover {
+  color: rgb(111, 175, 111);
+}
